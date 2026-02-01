@@ -50,10 +50,17 @@ export const authService = {
     return response.data;
   },
 
+  
   // -------- USER LOGIN --------
   loginUser: async (credentials) => {
     const response = await api.post('/api/users/login', credentials);
-    const token = response.data;
+
+    // ✅ FIX: extract token properly
+    const token = response.data.token || response.data.jwt;
+
+    if (!token) {
+      throw new Error("Token not found in login response");
+    }
 
     localStorage.setItem('token', token);
     localStorage.setItem('role', 'USER');
@@ -64,7 +71,12 @@ export const authService = {
   // -------- DRIVER LOGIN --------
   loginDriver: async (credentials) => {
     const response = await api.post('/api/drivers/login', credentials);
-    const token = response.data;
+
+    const token = response.data.token || response.data.jwt;
+
+    if (!token) {
+      throw new Error("Token not found in login response");
+    }
 
     localStorage.setItem('token', token);
     localStorage.setItem('role', 'DRIVER');
