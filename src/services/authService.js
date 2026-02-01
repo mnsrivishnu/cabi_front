@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-// ✅ MUST be set in Netlify as:
-// VITE_API_BASE_URL=https://cabbackend-production-955b.up.railway.app/api
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // Create axios instance
